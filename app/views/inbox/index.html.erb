@@ -1,0 +1,38 @@
+<%
+ @me = User.find_by(id: $myId)
+ @friend = User.find_by(id: $friendId)
+%>
+<div class="alert alert-danger" role="alert">
+  <strong>INBOX: <%= @me[:name] %> and <%= @friend[:name] %></strong> 
+</div>
+
+<% @inbox.each do |inbox|
+	if(inbox[:fromId] == $myId && inbox[:toId] == $friendId)
+ %>
+		<div class="alert alert-success" role="alert"><strong>I says:</strong> <%= inbox[:messge]%> </div>
+<%
+	end
+	if(inbox[:toId] == $myId && inbox[:fromId] == $friendId)
+		Inbox.where(toId: $myId).update(unread: false)
+    inbox[:unread] = 'false'
+		@from = User.find_by(id: inbox[:fromId])
+%>
+		<div class="alert alert-info" role="alert"><strong><%=@from[:name]%> 
+		says:</strong> <%= inbox[:messge]%> </div>
+<% end %>
+<% end %>
+<br />
+<br />
+<div class="form">
+      <div class="col-md-12">
+      <%= form_with scope: :inbox, url: sendMessage_path(:myId =>@me[:id], :friendId =>@friend[:id]), local: true do |f| %>
+      <div class="form-group">
+        <label for="">Write Message</label>
+        <%= f.text_area :message, class: "form-control" %>
+      </div>
+      <button type="submit" class="btn btn-success">Send Message</button>
+    
+      <%= link_to "Come Home", messenger_path(:id =>$myId, :name =>@me[:name]) %>
+      <% end %>
+    </div>
+  </div>
