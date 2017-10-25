@@ -6,7 +6,7 @@ Thành viên:
 * [x] **1312293** Trần Xuân Khoa (1312293)
 * [x] **1312298** Lê Thanh Khương (1312298)
 
-URL: **URL hosting của bài tập**
+URL: https://lab02-1312293-1312298.herokuapp.com/
 
 ## Yêu cầu
 
